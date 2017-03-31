@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+
+<script>
+
+var currentUrl = ""
+var nextHitTime = 0
+var loopTimer = null;
+var hitTimer = null;
+var isActive = false;
+
+function getUrls() {
+  return [
+    "https://google.com",
+    "https://www.reddit.com",
+    "https://facebook.com"
+  ]
+}
+
+function getRandomUrl() {
+  var urls = getUrls()
+  var randI = Math.floor(Math.random() * urls.length)
+  return getUrls()[randI]
+}
+
+function getRandomWait() {
+  return Math.floor(Math.random() * 15000);
+}
+
+function toggle() {
+  if (isActive) stop()
+  else start()
+}
+
+function stop() {
+  isActive = false
+  clearInterval(loopTimer)
+  document.getElementById("controlButton").innerHTML = "Start"
+}
+
+function start() {
+  isActive = true
+  loopTimer = setInterval(function() { mainLoop() }, 100)
+  document.getElementById("controlButton").innerHTML = "Stop"
+}
+
+function doHit(url) {
+  currentUrl = url
+  document.getElementById("urlFrame").src = url
+}
+
+function mainLoop() {
+  if (isActive) {
+    nextHitTime -= 100
+    if (nextHitTime < 0) {
+      doHit(getRandomUrl())
+      nextHitTime = getRandomWait()
+    }
+  }
+  updateUI()
+}
+
+function updateUI() {
+  var cpEl = document.getElementById("currentUrl")
+  var nhEl = document.getElementById("nextHitTime")
+  cpEl.innerText = currentUrl
+  nhEl.innerText = (Math.round(nextHitTime / 100) * 10) / 100
+}
+
+</script>
+
+<style>
+  .info-span { 
+    font-weight: bold;
+  }
+</style>
+
+  </head>
+  <body>
+    <h1>Privacy Maker</h1>
+    <button id="controlButton" onclick="toggle()">Start</button>
+    <p>
+      Current page: <span class="info-span" id="currentUrl"></span><br>
+      Next hit: <span class="info-span" id="nextHitTime"></span>
+    </p>
+    <webview id="urlFrame"></webview>
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>

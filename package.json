@@ -1,0 +1,20 @@
+{
+  "name": "subvertise",
+  "version": "1.0.0",
+  "description": "Mess with ISP's selling your data by ruining it!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/nullism/subvertise",
+  "keywords": [
+    "Subvertise",
+    "ISP",
+    "privacy"
+  ],
+  "author": "Nullism",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  }
+}
