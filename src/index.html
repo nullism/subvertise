@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Subvertise - Ruin it for them</title>
+    <link rel="stylesheet" href="css/material-icons.css">
+    <link rel="stylesheet" href="css/mdl.css">
+<script>
+
+var currentUrl = ""
+var nextHitTime = 0
+var loopTimer = null;
+var hitTimer = null;
+var isActive = false;
+
+function getUrls() {
+  return [
+    "https://google.com",
+    "https://www.reddit.com",
+    "https://facebook.com"
+  ]
+}
+
+function getRandomUrl() {
+  var urls = getUrls()
+  var randI = Math.floor(Math.random() * urls.length)
+  return getUrls()[randI]
+}
+
+function getRandomWait() {
+  return Math.floor(Math.random() * 20000);
+}
+
+function toggle() {
+  if (isActive) stop()
+  else start()
+}
+
+function stop() {
+  isActive = false
+  //clearInterval(loopTimer)
+  document.getElementById("controlButton").innerHTML = '<i class="material-icons">play_arrow</i>'
+}
+
+function start() {
+  isActive = true
+  clearTimeout(loopTimer)
+  loopTimer = setInterval(function() { mainLoop() }, 100)
+  document.getElementById("controlButton").innerHTML = '<i class="material-icons">pause</i>'
+}
+
+function doHit(url) {
+  currentUrl = url
+  document.getElementById("url-frame").src = url
+}
+
+function mainLoop() {
+  if (isActive) {
+    nextHitTime -= 100
+    if (nextHitTime < 0) {
+      doHit(getRandomUrl())
+      nextHitTime = getRandomWait()
+    }
+  }
+  updateUI()
+}
+
+function updateUI() {
+  var cpEl = document.getElementById("currentUrl")
+  var nhEl = document.getElementById("nextHitTime")
+  var frameEl = document.getElementById("url-frame")
+  var tabId = document.querySelector(".is-active").id
+  if (tabId === "browser-link") {
+    if (frameEl.className.indexOf("hidden") > -1) {
+      frameEl.className = frameEl.className.replace("hidden", "")
+    }
+  } else {
+    if (frameEl.className.indexOf("hidden") === -1) {
+      frameEl.className += " hidden"
+    }
+  }
+  cpEl.innerText = currentUrl
+  nhEl.innerText = (Math.round(nextHitTime / 100) * 10) / 100
+}
+
+</script>
+
+<style>
+  #wrapper {
+    padding-left: 10px;
+  }
+  #controlbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    z-index: 100;
+  }
+
+  #url-frame {
+    position: fixed;
+    bottom: 0;
+    top: 50px;
+    right: 0;
+    left: 0;
+  }
+  #url-frame.hidden {
+    top:0;
+    height: 0;
+    left: 0;
+    right: 0;
+    z-index: -10;
+  }
+  .float-left {
+    float: left;
+    padding-right: 20px;
+  }
+  .clear {
+    clear: both;
+  }
+  .info-span { 
+    font-weight: bold;
+  }
+  #controlbar .material-icons, #controlbar .mdl-button {
+    vertical-align: middle !important;
+  }
+</style>
+
+</head>
+<body>
+  <div id="wrapper">
+    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+      <div class="mdl-tabs__tab-bar">
+          <a href="#links" class="mdl-tabs__tab">
+            <i class="material-icons">link</i>
+          </a>
+          <a id="browser-link" href="#browser" class="mdl-tabs__tab is-active">
+            <i class="material-icons">public</i>
+          </a>
+          <a href="#options" class="mdl-tabs__tab">
+            <i class="material-icons">list</i>
+          </a>
+      </div>
+
+
+      <div class="mdl-tabs__panel" id="links">
+      </div>
+      <div class="mdl-tabs__panel is-active" id="browser">
+        
+      </div>
+
+      <div class="mdl-tabs__panel" id="options">
+
+      </div>
+    </div>
+
+    <div id="controlbar">
+      <div>
+      <div class="float-left">
+        <button 
+          id="controlButton" 
+          class="mdl-button mdl-js-button mdl-button--colored mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect" 
+          onclick="toggle()">
+            <i class="material-icons">play_arrow</i>
+        </button>
+      </div>
+
+      <div class="float-left">
+          <i class="material-icons">link</i> 
+          <span id="currentUrl"></span>
+      </div>
+
+      <div class="float-left">
+          <i class="material-icons">timer</i> 
+          <span id="nextHitTime"></span>
+      </div>
+
+      <div class="clear"></div>
+      </div>
+    </div>
+    
+  <webview id="url-frame" class="visible"></webview>
+  </div>
+  
+</body>
+
+  <script src="js/material.min.js"></script>
+</html>
