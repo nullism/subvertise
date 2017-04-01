@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Subvertise - Ruin it for them</title>
 
 <script>
 
@@ -49,7 +49,7 @@ function start() {
 
 function doHit(url) {
   currentUrl = url
-  document.getElementById("urlFrame").src = url
+  document.getElementById("url-frame").src = url
 }
 
 function mainLoop() {
@@ -73,6 +73,18 @@ function updateUI() {
 </script>
 
 <style>
+  #url-frame {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  #url-frame.visible {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 200px;
+  }
   .info-span { 
     font-weight: bold;
   }
@@ -80,13 +92,13 @@ function updateUI() {
 
   </head>
   <body>
-    <h1>Privacy Maker</h1>
+    <h1>Subvertise</h1>
     <button id="controlButton" onclick="toggle()">Start</button>
     <p>
       Current page: <span class="info-span" id="currentUrl"></span><br>
       Next hit: <span class="info-span" id="nextHitTime"></span>
     </p>
-    <webview id="urlFrame"></webview>
+    <webview id="url-frame" class="visible"></webview>
   </body>
 
   <script>
