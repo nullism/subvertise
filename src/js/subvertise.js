@@ -10,7 +10,7 @@ function getUrls() {
   var urlList = []
   if (urlString) {
     urlList = urlString.split(",")
-  } 
+  }
   else {
     urlList = [
       "https://google.com",
@@ -29,7 +29,7 @@ function getRandomUrl() {
 }
 
 function getRandomWait() {
-  return Math.floor(Math.random() * 50000);
+  return Math.floor(Math.random() * 50000) + 5000;
 }
 
 function toggle() {
@@ -63,10 +63,11 @@ function setUrlText() {
 function saveUrlText() {
   var urlEl = document.getElementById("url-text")
   var urls = urlEl.value.split("\n")
+  var newUrls = []
   for (var i=0; i<urls.length; i++) {
-    urls[i] = urls[i].trim()
+    if (urls[i].length) newUrls.push(urls[i].trim())
   }
-  storage.setItem("urls", urls)
+  storage.setItem("urls", newUrls)
 }
 
 function mainLoop() {

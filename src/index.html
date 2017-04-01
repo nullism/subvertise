@@ -14,6 +14,7 @@
 <style>
   #wrapper {
     padding-left: 10px;
+    padding-right: 10px;
   }
   #controlbar {
     position: fixed;
@@ -27,7 +28,7 @@
   }
   #url-text-wrap {
     position: absolute;
-    top: 80px;
+    top: 100px;
     bottom: 100px;
     left: 10px;
     right: 15px;
@@ -51,6 +52,11 @@
     height: calc(100% - 55px);
     position: absolute;
   }
+  .form-box {
+    border: 1px solid #ddd;
+    padding: 3px;
+    margin: 3px;
+  }
   .frame-hide {
     position: fixed;
     background: #fff;
@@ -65,7 +71,7 @@
   .clear {
     clear: both;
   }
-  .info-span { 
+  .info-span {
     font-weight: bold;
   }
   #controlbar .material-icons, #controlbar .mdl-button {
@@ -80,10 +86,10 @@
     <webview id="url-frame" autosize="on"></webview>
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
       <div class="mdl-tabs__tab-bar">
-          <a href="#links" class="mdl-tabs__tab" style="background: #fff">
+          <a href="#links" class="mdl-tabs__tab is-active" style="background: #fff">
             <i class="material-icons">link</i>
           </a>
-          <a id="browser-link" href="#browser" class="mdl-tabs__tab is-active">
+          <a id="browser-link" href="#browser" class="mdl-tabs__tab">
             <i class="material-icons">public</i>
           </a>
           <a href="#options" class="mdl-tabs__tab">
@@ -91,40 +97,57 @@
           </a>
       </div>
 
-      <div class="mdl-tabs__panel" id="links">
-        <p>Enter urls below, each url on their own line</p>
+      <div class="mdl-tabs__panel is-active" id="links">
+        <p>
+          Enter urls below, each url on its own line.
+
+          URLs starting with <code>https://</code> offer the <i>best</i> possible
+          level of subversion.
+        </p>
         <div id="url-text-wrap">
           <textarea type="text" onchange="saveUrlText()" id="url-text"></textarea>
         </div>
       </div>
 
-      <div class="mdl-tabs__panel is-active" id="browser">
+      <div class="mdl-tabs__panel" id="browser">
         <!-- <iframe id="url-frame" class="" sandbox="allow-forms allow-scripts allow-same-origin"></iframe> -->
       </div>
 
       <div class="mdl-tabs__panel" id="options">
-
+        <div class="form-box">
+          <p>Max wait time. The most amount of time to wait between page visits.</p>
+          <div>
+            <input id="maxWaitTime" class="mdl-slider mdl-js-slider" type="range" id="s1" min="20" max="50" value="30" step="1">
+          </div>
+        </div>
+        <div class="form-box">
+          <p>Chromium proxy string.</p>
+          <div class="mdl-textfield mdl-js-textfield" style="width: 95%; padding-top: 0;">
+            <input id="proxyString" class="mdl-textfield__input" type="text" id="sample3">
+            <label class="mdl-textfield__label" for="sample3">Chromium proxy string</label>
+          </div>
+        </div>
       </div>
     </div>
 
     <div id="controlbar">
       <div>
       <div class="float-left">
-        <button 
-          id="controlButton" 
-          class="mdl-button mdl-js-button mdl-button--colored mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect" 
+        <button
+          id="controlButton"
+          class="mdl-button mdl-js-button mdl-button--colored mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect"
           onclick="toggle()">
             <i class="material-icons">play_arrow</i>
         </button>
       </div>
 
       <div class="float-left">
-          <i class="material-icons">link</i> 
+          <i class="material-icons">link</i>
           <span id="currentUrl"></span>
       </div>
 
       <div class="float-left">
-          <i class="material-icons">timer</i> 
+          <i class="material-icons">timer</i>
           <span id="nextHitTime"></span>
       </div>
 
@@ -133,10 +156,10 @@
     </div>
 
   </div>
-  
+
   <script src="js/subvertise.js"></script>
   <script src="js/material.min.js"></script>
-  
+
 </body>
 
 </html>
