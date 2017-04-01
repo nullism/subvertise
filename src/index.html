@@ -17,15 +17,27 @@
   }
   #controlbar {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.4);
     color: #fff;
     z-index: 100;
   }
-
+  #url-text-wrap {
+    position: absolute;
+    top: 80px;
+    bottom: 100px;
+    left: 10px;
+    right: 15px;
+    padding: 0;
+  }
+  #url-text {
+    width: 100%;
+    height: 100%;
+    resize: none;
+  }
   #url-frame {
     position: fixed;
     bottom: 0;
@@ -72,7 +84,10 @@
       </div>
 
       <div class="mdl-tabs__panel" id="links">
-
+        <p>Enter urls below, each url on their own line</p>
+        <div id="url-text-wrap">
+          <textarea type="text" onchange="saveUrlText()" id="url-text"></textarea>
+        </div>
       </div>
 
       <div class="mdl-tabs__panel is-active" id="browser">
@@ -109,7 +124,7 @@
       </div>
     </div>
     
-    <webview id="url-frame" class="visible"></webview>
+    <webview id="url-frame" class="hidden"></webview>
   </div>
 
   <script src="js/subvertise.js"></script>

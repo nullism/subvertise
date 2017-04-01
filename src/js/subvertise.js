@@ -1,15 +1,25 @@
 var currentUrl = ""
 var nextHitTime = 0
-var loopTimer = null;
-var hitTimer = null;
-var isActive = false;
+var loopTimer = null
+var hitTimer = null
+var isActive = false
+var storage = localStorage
 
 function getUrls() {
-  return [
-    "https://google.com",
-    "https://www.reddit.com",
-    "https://facebook.com"
-  ]
+  var urlString = storage.getItem("urls")
+  var urlList = []
+  if (urlString) {
+    urlList = urlString.split(",")
+  } 
+  else {
+    urlList = [
+      "https://google.com",
+      "https://www.reddit.com",
+      "https://facebook.com"
+    ]
+    localStorage.setItem("urls", urlList)
+  }
+  return urlList
 }
 
 function getRandomUrl() {
@@ -44,6 +54,20 @@ function doHit(url) {
   document.getElementById("url-frame").src = url
 }
 
+function setUrlText() {
+  var urlEl = document.getElementById("url-text")
+  urlEl.value = getUrls().join("\n")
+}
+
+function saveUrlText() {
+  var urlEl = document.getElementById("url-text")
+  var urls = urlEl.value.split("\n")
+  for (var i=0; i<urls.length; i++) {
+    urls[i] = urls[i].trim()
+  }
+  storage.setItem("urls", urls)
+}
+
 function mainLoop() {
   if (isActive) {
     nextHitTime -= 100
@@ -59,6 +83,8 @@ function updateUI() {
   var cpEl = document.getElementById("currentUrl")
   var nhEl = document.getElementById("nextHitTime")
   var frameEl = document.getElementById("url-frame")
+  // Work-around for an electron crash when the frame 
+  // is in an MDL tab.
   var tabId = document.querySelector(".is-active").id
   if (tabId === "browser-link") {
     if (frameEl.className.indexOf("hidden") > -1) {
@@ -71,4 +97,8 @@ function updateUI() {
   }
   cpEl.innerText = currentUrl
   nhEl.innerText = (Math.round(nextHitTime / 100) * 10) / 100
+}
+
+window.onload = function() {
+  setUrlText()
 }
