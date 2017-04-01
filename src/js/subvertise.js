@@ -51,7 +51,8 @@ function start() {
 
 function doHit(url) {
   currentUrl = url
-  document.getElementById("url-frame").src = url
+  var frameEl = document.getElementById("url-frame")
+  frameEl.src = url
 }
 
 function setUrlText() {
@@ -83,20 +84,15 @@ function updateUI() {
   var cpEl = document.getElementById("currentUrl")
   var nhEl = document.getElementById("nextHitTime")
   var frameEl = document.getElementById("url-frame")
-  // Work-around for an electron crash when the frame 
-  // is in an MDL tab.
-  var tabId = document.querySelector(".is-active").id
-  if (tabId === "browser-link") {
-    if (frameEl.className.indexOf("hidden") > -1) {
-      frameEl.className = frameEl.className.replace("hidden", "")
-    }
-  } else {
-    if (frameEl.className.indexOf("hidden") === -1) {
-      frameEl.className += " hidden"
-    }
-  }
   cpEl.innerText = currentUrl
   nhEl.innerText = (Math.round(nextHitTime / 100) * 10) / 100
+  // Hack for crashing webviews in Electron
+  var tab = document.querySelector(".is-active")
+  if (tab.id === "browser-link") {
+    frameEl.style.zIndex = 10
+  } else {
+    frameEl.style.zIndex = -10
+  }
 }
 
 window.onload = function() {

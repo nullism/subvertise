@@ -11,10 +11,10 @@ function createWindow () {
 
   // /usr/bin/google-chrome-stable --proxy-server="socks=localhost:12345" --proxy-bypass-list="*.oracle.com;*.oraclecorp.com;*.lan"  %U
   //app.commandLine.appendSwitch("proxy-server", "socks=localhost:12345")
-
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
   mainWindow.setMenu(null)
+  
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -36,6 +36,7 @@ function createWindow () {
         delete d.responseHeaders['x-frame-options'];
         delete d.responseHeaders['X-Frame-Options'];
     }
+    d.responseHeaders['Access-Control-Allow-Origin'] = "*"
     c({cancel: false, responseHeaders: d.responseHeaders});
   });
 

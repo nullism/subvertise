@@ -40,10 +40,22 @@
   }
   /* Have to be careful with displaying absolute items inside an MDL tab */
   #url-frame {
+    position: absolute;
+    top: 55px;
+    width: 98%;
+    height: calc(100% - 55px);
+  }
+  #url-frame-old {
     left: 0;
     right: 0;
     height: calc(100% - 55px);
     position: absolute;
+  }
+  .frame-hide {
+    position: fixed;
+    background: #fff;
+    top: 0; left: 0; bottom: 0; right: 0;
+    z-index: -1;
   }
 
   .float-left {
@@ -64,9 +76,11 @@
 </head>
 <body>
   <div id="wrapper">
+    <div class="frame-hide"></div>
+    <webview id="url-frame" autosize="on"></webview>
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
       <div class="mdl-tabs__tab-bar">
-          <a href="#links" class="mdl-tabs__tab">
+          <a href="#links" class="mdl-tabs__tab" style="background: #fff">
             <i class="material-icons">link</i>
           </a>
           <a id="browser-link" href="#browser" class="mdl-tabs__tab is-active">
@@ -85,7 +99,7 @@
       </div>
 
       <div class="mdl-tabs__panel is-active" id="browser">
-        <iframe id="url-frame" class=""></iframe>
+        <!-- <iframe id="url-frame" class="" sandbox="allow-forms allow-scripts allow-same-origin"></iframe> -->
       </div>
 
       <div class="mdl-tabs__panel" id="options">
