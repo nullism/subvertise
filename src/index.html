@@ -38,20 +38,14 @@
     height: 100%;
     resize: none;
   }
+  /* Have to be careful with displaying absolute items inside an MDL tab */
   #url-frame {
-    position: fixed;
-    bottom: 0;
-    top: 50px;
-    right: 0;
-    left: 0;
-  }
-  #url-frame.hidden {
-    top:0;
-    height: 0;
     left: 0;
     right: 0;
-    z-index: -10;
+    height: calc(100% - 55px);
+    position: absolute;
   }
+
   .float-left {
     float: left;
     padding-right: 20px;
@@ -91,7 +85,7 @@
       </div>
 
       <div class="mdl-tabs__panel is-active" id="browser">
-        
+        <iframe id="url-frame" class=""></iframe>
       </div>
 
       <div class="mdl-tabs__panel" id="options">
@@ -123,12 +117,12 @@
       <div class="clear"></div>
       </div>
     </div>
-    
-    <webview id="url-frame" class="hidden"></webview>
-  </div>
 
+  </div>
+  
   <script src="js/subvertise.js"></script>
-  <script src="js/material.min.js"></script>  
+  <script src="js/material.min.js"></script>
+  
 </body>
 
 </html>

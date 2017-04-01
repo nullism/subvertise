@@ -29,7 +29,7 @@ function getRandomUrl() {
 }
 
 function getRandomWait() {
-  return Math.floor(Math.random() * 20000);
+  return Math.floor(Math.random() * 50000);
 }
 
 function toggle() {

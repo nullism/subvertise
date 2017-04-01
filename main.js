@@ -29,6 +29,16 @@ function createWindow () {
     mainWindow = null
   })
 
+  // Hack for iframe x-frame-options denying request
+  // (can't use webview due to crashing electron)
+  mainWindow.webContents.session.webRequest.onHeadersReceived({}, (d, c) => {
+    if(d.responseHeaders['x-frame-options'] || d.responseHeaders['X-Frame-Options']){
+        delete d.responseHeaders['x-frame-options'];
+        delete d.responseHeaders['X-Frame-Options'];
+    }
+    c({cancel: false, responseHeaders: d.responseHeaders});
+  });
+
 
 }
 
