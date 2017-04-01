@@ -5,7 +5,7 @@ bill](http://www.theverge.com/2017/3/29/15100620/congress-fcc-isp-web-browsing-p
 repealing FCC privacy controls for the internet. 
 
 If ISPs can sell your browsing data to advertisers, 
-what value with that data have if it's full of false-visits? 
+what value will that data have if it's full of false-visits? 
 
 ## How it works
 
