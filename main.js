@@ -40,8 +40,6 @@ function createWindow () {
     d.responseHeaders['Access-Control-Allow-Origin'] = "*"
     c({cancel: false, responseHeaders: d.responseHeaders});
   });
-
-
 }
 
 // We need to call this outside "ready" otherwise
