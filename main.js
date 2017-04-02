@@ -16,13 +16,14 @@ function createWindow () {
   if (proxyString && proxyString.length) {
     app.commandLine.appendSwitch("proxy-server", proxyString)
   }
-  // Create the browser window.
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     minWidth: 600,
     minHeight: 300
   })
+  // If minimized, Electron stops running scripts.
   mainWindow.setMinimizable(false)
   mainWindow.setMenu(null)
 
@@ -34,7 +35,7 @@ function createWindow () {
     slashes: true
   }))
 
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null
