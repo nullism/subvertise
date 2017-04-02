@@ -18,82 +18,89 @@
   }
   #controlbar {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
+    left: 0px;
+    top: 0px;
     padding: 10px;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: #fff;
     z-index: 100;
   }
-  #url-text-wrap {
-    position: absolute;
-    top: 100px;
-    bottom: 100px;
-    left: 10px;
-    right: 15px;
-    padding: 0;
+  #info-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 26px;
+    padding: 3px;
+    overflow: hidden;
+    background-color: #ccc;
+  }
+  #info-bar .material-icons {
+    vertical-align: middle !important;
+  }
+  #info-bar p {
+    display: inline;
+    max-width: 50px;
+    overflow: hidden;
   }
   #url-text {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 160px);
     resize: none;
   }
   /* Have to be careful with displaying absolute items inside an MDL tab */
   #url-frame {
     position: absolute;
-    top: 55px;
-    width: 98%;
-    height: calc(100% - 55px);
-  }
-  #url-frame-old {
-    left: 0;
-    right: 0;
-    height: calc(100% - 55px);
-    position: absolute;
+    top: 50px;
+    width: 100%;
+    height: calc(100% - 80px);
+    z-index: -2;
   }
   .form-box {
+    margin-bottom: 10px;
+  }
+  .form-box p {
+    margin: 0; padding: 3px;
+  }
+  .text-field {
     border: 1px solid #ddd;
+    border-bottom: 1px solid #ccc;
+    width: calc(100% - 3px - 3px);
+    height: 30px;
     padding: 3px;
-    margin: 3px;
+    line-height: 30px;
   }
   .frame-hide {
     position: fixed;
     background: #fff;
-    top: 0; left: 0; bottom: 0; right: 0;
+    top: 0; left: 0; right: 0;
+    bottom: 0;
+    padding: 0; margin: 0;
     z-index: -1;
   }
 
-  .float-left {
-    float: left;
-    padding-right: 20px;
-  }
-  .clear {
-    clear: both;
-  }
   .info-span {
     font-weight: bold;
   }
-  #controlbar .material-icons, #controlbar .mdl-button {
-    vertical-align: middle !important;
+  .mdl-tabs {
   }
+
 </style>
 
 </head>
 <body>
+  <webview id="url-frame" autosize="on"></webview>
   <div id="wrapper">
     <div class="frame-hide"></div>
-    <webview id="url-frame" autosize="on"></webview>
+
+
+
     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
       <div class="mdl-tabs__tab-bar">
-          <a href="#links" class="mdl-tabs__tab is-active" style="background: #fff">
-            <i class="material-icons">link</i>
+          <a href="#links" class="mdl-tabs__tab is-active">
+            <i class="material-icons">list</i>
           </a>
           <a id="browser-link" href="#browser" class="mdl-tabs__tab">
             <i class="material-icons">public</i>
           </a>
           <a href="#options" class="mdl-tabs__tab">
-            <i class="material-icons">list</i>
+            <i class="material-icons">settings</i>
           </a>
       </div>
 
@@ -114,45 +121,44 @@
       </div>
 
       <div class="mdl-tabs__panel" id="options">
+
         <div class="form-box">
-          <p>Max wait time. The most amount of time to wait between page visits.</p>
-          <div>
-            <input id="maxWaitTime" class="mdl-slider mdl-js-slider" type="range" id="s1" min="20" max="50" value="30" step="1">
-          </div>
+          <p>Minimum wait time in seconds. Minimum of <i>1</i></p>
+          <input class="text-field" type="number" id="min-wait-time-text" onchange="saveMinWaitTime()">
         </div>
+
         <div class="form-box">
-          <p>Chromium proxy string.</p>
-          <div class="mdl-textfield mdl-js-textfield" style="width: 95%;">
-            <input id="proxyString" class="mdl-textfield__input" type="text" id="sample3">
-            <label class="mdl-textfield__label" for="sample3">Chromium proxy string</label>
-          </div>
+          <p>Max wait time in seconds. Maximum of <i>300</i></p>
+          <input class="text-field" type="number" id="max-wait-time-text" onchange="saveMaxWaitTime()">
+        </div>
+        <b>Advanced</b>
+        <div class="form-box">
+          <p>Proxy string. Same format as Chromium <code>proxy-server</code> option.</p>
+          <input type="text" class="text-field" id="proxy-text">
         </div>
       </div>
     </div>
 
     <div id="controlbar">
-      <div>
       <div class="float-left">
         <button
-          id="controlButton"
+          id="control-button"
           class="mdl-button mdl-js-button mdl-button--colored mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect"
           onclick="toggle()">
             <i class="material-icons">play_arrow</i>
         </button>
       </div>
+    </div>
 
-      <div class="float-left">
-          <i class="material-icons">link</i>
-          <span id="currentUrl"></span>
-      </div>
-
-      <div class="float-left">
-          <i class="material-icons">timer</i>
-          <span id="nextHitTime"></span>
-      </div>
-
-      <div class="clear"></div>
-      </div>
+    <div id="info-bar">
+      <p>
+        <i class="material-icons">link</i>
+        <span id="currentUrl"></span>
+      </p>
+      <p>
+        <i class="material-icons">timer</i>
+        <span id="nextHitTime"></span>
+      </p>
     </div>
 
   </div>

@@ -12,7 +12,12 @@ function createWindow () {
   // /usr/bin/google-chrome-stable --proxy-server="socks=localhost:12345" --proxy-bypass-list="*.oracle.com;*.oraclecorp.com;*.lan"  %U
   //app.commandLine.appendSwitch("proxy-server", "socks=localhost:12345")
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 800, height: 600 })
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    minWidth: 600,
+    minHeight: 300
+  })
   mainWindow.setMinimizable(false)
   mainWindow.setMenu(null)
 
@@ -24,7 +29,7 @@ function createWindow () {
     slashes: true
   }))
 
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null
