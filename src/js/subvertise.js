@@ -30,7 +30,14 @@ function storeSet(name, value) {
 }
 
 function getUrls() {
-  var urlList = storeGet("urls", ["https://google.com"])
+  var urlList = storeGet("urls", [
+    "https://google.com",
+    "https://reddit.com",
+    "https://facebook.com",
+    "https://yahoo.com",
+    "https://myspace.com",
+    "https://amazon.com"
+  ])
   return urlList
 }
 
