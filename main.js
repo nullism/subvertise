@@ -4,13 +4,18 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
+const ConfigStore = require("configstore")
+const store = new ConfigStore("subvertise")
 
 let mainWindow
 
 function createWindow () {
 
-  // /usr/bin/google-chrome-stable --proxy-server="socks=localhost:12345" --proxy-bypass-list="*.oracle.com;*.oraclecorp.com;*.lan"  %U
-  //app.commandLine.appendSwitch("proxy-server", "socks=localhost:12345")
+  // /usr/bin/google-chrome-stable --proxy-server="socks=localhost:12345"
+  let proxyString = store.get("proxyString")
+  if (proxyString && proxyString.length) {
+    app.commandLine.appendSwitch("proxy-server", proxyString)
+  }
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,

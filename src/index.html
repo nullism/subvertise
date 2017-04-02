@@ -78,9 +78,6 @@
   .info-span {
     font-weight: bold;
   }
-  .mdl-tabs {
-  }
-
 </style>
 
 </head>
@@ -134,7 +131,8 @@
         <b>Advanced</b>
         <div class="form-box">
           <p>Proxy string. Same format as Chromium <code>proxy-server</code> option.</p>
-          <input type="text" class="text-field" id="proxy-text">
+          <input class="text-field" type="text" id="proxy-text" onchange="saveProxyText()"><br>
+          <small>This setting requires restarting Subvertise to take effect</small>
         </div>
       </div>
     </div>

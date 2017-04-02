@@ -1,18 +1,21 @@
+// Persistent storage (blocking, but quick)
+const ConfigStore = require("configstore")
+const store = new ConfigStore("subvertise")
+
+// variables
+var isActive = false
 var currentUrl = ""
 var nextHitTime = 0
 var loopTimer = null
 var hitTimer = null
-var isActive = false
-var storage = localStorage
-var ConfigStore = require("configstore")
-var store = new ConfigStore("subvertise")
 
 // Elements
-var browserEl = document.getElementById("url-frame")
-var urlTextEl = document.getElementById("url-text")
-var maxWaitTextEl = document.getElementById("max-wait-time-text")
-var minWaitTextEl = document.getElementById("min-wait-time-text")
-var controlButtonEl = document.getElementById("control-button")
+const browserEl = document.getElementById("url-frame")
+const urlTextEl = document.getElementById("url-text")
+const maxWaitTextEl = document.getElementById("max-wait-time-text")
+const minWaitTextEl = document.getElementById("min-wait-time-text")
+const proxyTextEl = document.getElementById("proxy-text")
+const controlButtonEl = document.getElementById("control-button")
 
 function storeGet(name, defaultValue) {
   var val = store.get(name)
@@ -77,6 +80,7 @@ function populatUi() {
   urlTextEl.value = getUrls().join("\n")
   maxWaitTextEl.value = getMaxWaitTime()
   minWaitTextEl.value = getMinWaitTime()
+  proxyTextEl.value = store.get("proxyString","")
 }
 
 function saveMaxWaitTime() {
@@ -105,15 +109,27 @@ function saveMinWaitTime() {
   storeSet("minWaitTime", minWait)
 }
 
+function saveProxyText() {
+  let proxyString = proxyTextEl.value
+  if (proxyString.trim().length) {
+    storeSet("proxyString", proxyString)
+  }
+  else {
+    storeSet("proxyString", null)
+  }
+}
+
 function saveUrlText() {
-  var urls = urlTextEl.value.split("\n")
-  var newUrls = []
+  let urls = urlTextEl.value.split("\n")
+  let newUrls = []
   for (var i=0; i<urls.length; i++) {
     if (urls[i].length) newUrls.push(urls[i].trim())
   }
   storeSet("urls", newUrls)
 }
-
+/*
+ * This runs every 100 milliseconds
+ */
 function mainLoop() {
   if (isActive) {
     nextHitTime -= 100
