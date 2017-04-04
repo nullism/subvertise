@@ -3,11 +3,12 @@ const ConfigStore = require("configstore")
 const store = new ConfigStore("subvertise")
 
 // variables
-var isActive = false
-var currentUrl = ""
-var nextHitTime = 0
-var loopTimer = null
-var hitTimer = null
+let isActive = false
+let currentUrl = ""
+let nextHitTime = 0
+let loopTimer = null
+let hitTimer = null
+let hitCount = null
 
 // Elements
 const browserEl = document.getElementById("url-frame")
@@ -17,20 +18,24 @@ const minWaitTextEl = document.getElementById("min-wait-time-text")
 const proxyTextEl = document.getElementById("proxy-text")
 const controlButtonEl = document.getElementById("control-button")
 
+// Wrapper around storage set, incase we change it.
 function storeGet(name, defaultValue) {
-  var val = store.get(name)
+  let val = store.get(name)
   if (!val && defaultValue) {
     return defaultValue
   }
   return val
 }
 
+// Wrapper around storage get, incase we change it.
 function storeSet(name, value) {
   store.set(name, value)
 }
 
+// Return a list of URLS from user storage
+// this blocks, but it's quick
 function getUrls() {
-  var urlList = storeGet("urls", [
+  let urlList = storeGet("urls", [
     "https://google.com",
     "https://reddit.com",
     "https://facebook.com",
@@ -42,8 +47,8 @@ function getUrls() {
 }
 
 function getRandomUrl() {
-  var urls = getUrls()
-  var randI = Math.floor(Math.random() * urls.length)
+  let urls = getUrls()
+  let randI = Math.floor(Math.random() * urls.length)
   return urls[randI]
 }
 
@@ -56,8 +61,8 @@ function getMinWaitTime() {
 }
 
 function getRandomWait() {
-  var maxWait = getMaxWaitTime() * 1000
-  var minWait = getMinWaitTime() * 1000
+  let maxWait = getMaxWaitTime() * 1000
+  let minWait = getMinWaitTime() * 1000
   return Math.floor(Math.random() * (maxWait - minWait)) + minWait
 }
 
@@ -81,6 +86,7 @@ function start() {
 function doHit(url) {
   currentUrl = url
   browserEl.src = url
+  hitCount++
 }
 
 function populatUi() {
@@ -90,8 +96,9 @@ function populatUi() {
   proxyTextEl.value = store.get("proxyString","")
 }
 
+// Save #max-wait-time-text.value to store
 function saveMaxWaitTime() {
-  var maxWait = parseInt(maxWaitTextEl.value)
+  let maxWait = parseInt(maxWaitTextEl.value)
   if (maxWait <= getMinWaitTime()) {
     maxWait = getMinWaitTime() + 1
     maxWaitTextEl.value = maxWait
@@ -103,8 +110,9 @@ function saveMaxWaitTime() {
   storeSet("maxWaitTime", maxWait)
 }
 
+// Save #min-wait-time-text.value to store
 function saveMinWaitTime() {
-  var minWait = parseInt(minWaitTextEl.value)
+  let minWait = parseInt(minWaitTextEl.value)
   if (minWait < 1) {
     minWait = 1
     minWaitTextEl.value = minWait
@@ -116,6 +124,7 @@ function saveMinWaitTime() {
   storeSet("minWaitTime", minWait)
 }
 
+// Save #proxy-text.value to store
 function saveProxyText() {
   let proxyString = proxyTextEl.value
   if (proxyString.trim().length) {
@@ -126,17 +135,17 @@ function saveProxyText() {
   }
 }
 
+// Save #url-text.value to store
 function saveUrlText() {
   let urls = urlTextEl.value.split("\n")
   let newUrls = []
-  for (var i=0; i<urls.length; i++) {
+  for (let i=0; i<urls.length; i++) {
     if (urls[i].length) newUrls.push(urls[i].trim())
   }
   storeSet("urls", newUrls)
 }
-/*
- * This runs every 100 milliseconds
- */
+
+// Runs every 100 milliseconds
 function mainLoop() {
   if (isActive) {
     nextHitTime -= 100
@@ -148,13 +157,15 @@ function mainLoop() {
   updateUI()
 }
 
+// Update UI elements
 function updateUI() {
-  var cpEl = document.getElementById("currentUrl")
-  var nhEl = document.getElementById("nextHitTime")
+  let cpEl = document.getElementById("currentUrl")
+  let nhEl = document.getElementById("nextHitTime")
   cpEl.innerText = currentUrl
   nhEl.innerText = (Math.round(nextHitTime / 100) * 10) / 100
   // Hack for crashing webviews in Electron
-  var tab = document.querySelector(".is-active")
+  // webviews *cannot* be both hidden and working
+  let tab = document.querySelector(".is-active")
   if (tab.id === "browser-link") {
     browserEl.style.zIndex = 10
   } else {
