@@ -89,6 +89,8 @@ function doHit(url) {
   hitCount++
 }
 
+// Called once, in window.onload
+// populates UI input fields
 function populatUi() {
   urlTextEl.value = getUrls().join("\n")
   maxWaitTextEl.value = getMaxWaitTime()

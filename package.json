@@ -1,6 +1,6 @@
 {
   "name": "subvertise",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Mess with ISP's selling your data by ruining it!",
   "main": "main.js",
   "scripts": {
