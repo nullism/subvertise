@@ -93,7 +93,7 @@ function populatUi() {
   urlTextEl.value = getUrls().join("\n")
   maxWaitTextEl.value = getMaxWaitTime()
   minWaitTextEl.value = getMinWaitTime()
-  proxyTextEl.value = store.get("proxyString","")
+  proxyTextEl.value = storeGet("proxyString","")
 }
 
 // Save #max-wait-time-text.value to store
