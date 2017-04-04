@@ -4,7 +4,11 @@
   "description": "Mess with ISP's selling your data by ruining it!",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "com.nullism.subvertise"
   },
   "repository": "https://github.com/nullism/subvertise",
   "keywords": [
@@ -15,7 +19,8 @@
   "author": "Nullism",
   "license": "MIT",
   "devDependencies": {
-    "electron": "~1.6.2"
+    "electron": "~1.6.2",
+    "electron-builder": "^16.6.1"
   },
   "dependencies": {
     "configstore": "^3.0.0"
