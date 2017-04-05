@@ -21,7 +21,7 @@ const controlButtonEl = document.getElementById("control-button")
 // Wrapper around storage set, incase we change it.
 function storeGet(name, defaultValue) {
   let val = store.get(name)
-  if (!val && defaultValue) {
+  if (!val && defaultValue != undefined) {
     return defaultValue
   }
   return val
