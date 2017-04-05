@@ -1,6 +1,6 @@
 {
   "name": "subvertise",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Mess with ISP's selling your data by ruining it!",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,10 @@
     "dist": "build"
   },
   "build": {
-    "appId": "com.nullism.subvertise"
+    "appId": "com.nullism.subvertise",
+    "nsis": {
+      "license": "LICENSE"
+    }
   },
   "repository": "https://github.com/nullism/subvertise",
   "keywords": [
