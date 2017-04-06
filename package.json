@@ -9,7 +9,10 @@
   },
   "build": {
     "appId": "com.nullism.subvertise",
-    "icon": "win-icon.ico",
+    "icon": "icons/win-icon.ico",
+    "linux": {
+      "icon": "icons/linux/"
+    },
     "nsis": {
       "license": "LICENSE"
     }

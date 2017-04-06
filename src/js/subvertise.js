@@ -79,7 +79,7 @@ function stop() {
 function start() {
   isActive = true
   clearTimeout(loopTimer)
-  loopTimer = setInterval(function() { mainLoop() }, 100)
+  loopTimer = setInterval(function () { mainLoop() }, 100)
   controlButtonEl.innerHTML = '<i class="material-icons">pause</i>'
 }
 
@@ -95,7 +95,7 @@ function populatUi() {
   urlTextEl.value = getUrls().join("\n")
   maxWaitTextEl.value = getMaxWaitTime()
   minWaitTextEl.value = getMinWaitTime()
-  proxyTextEl.value = storeGet("proxyString","")
+  proxyTextEl.value = storeGet("proxyString", "")
 }
 
 // Save #max-wait-time-text.value to store
@@ -141,7 +141,7 @@ function saveProxyText() {
 function saveUrlText() {
   let urls = urlTextEl.value.split("\n")
   let newUrls = []
-  for (let i=0; i<urls.length; i++) {
+  for (let i = 0; i < urls.length; i++) {
     if (urls[i].length) newUrls.push(urls[i].trim())
   }
   storeSet("urls", newUrls)
@@ -175,6 +175,6 @@ function updateUI() {
   }
 }
 
-window.onload = function() {
+window.onload = function () {
   populatUi()
 }
