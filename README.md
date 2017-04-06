@@ -20,9 +20,16 @@ won't know what you're really visiting, foiling their sinister plans.
 
 ## Install and Run
 
-I haven't yet created packages for this app, so as long as you have Nodejs installed (v6+)
-you can clone or download this repository and run `npm install` then `npm start` to
-run the app.
+### NPM
+
+If you'd like to run Subvertise manually, then you'll need to clone the repository,
+run `npm install` and `npm start`.
+
+### Windows Installer
+
+So far I've only created a Windows installer for release [v1.1.2](https://github.com/nullism/subvertise/releases/tag/v1.1.2).
+
+Just download the setup file and run it. You'll need to run it as "Administrator" on Windows 7.
 
 # Frequently Asked Questions
 
