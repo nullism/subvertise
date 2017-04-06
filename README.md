@@ -27,9 +27,13 @@ run `npm install` and `npm start`.
 
 ### Windows Installer
 
-So far I've only created a Windows installer for release [v1.1.2](https://github.com/nullism/subvertise/releases/tag/v1.1.2).
+There's now a Windows installer for release [v1.1.2](https://github.com/nullism/subvertise/releases/tag/v1.1.2).
 
-Just download the setup file and run it. You'll need to run it as "Administrator" on Windows 7.
+Just download the setup file and run it. You may need to run it as "Administrator" on Windows 7.
+
+### Linux AppImage
+
+A portable AppImage for 64 bit Linux exists here [v1.1.2](https://github.com/nullism/subvertise/releases/tag/v1.1.2). 
 
 # Frequently Asked Questions
 
